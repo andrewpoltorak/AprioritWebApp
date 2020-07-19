@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+//@Injectable()
 var DataService = /** @class */ (function () {
     function DataService(http) {
         this.http = http;
-        this.url = "/api/Employees";
+        this.url = "/api/Employee";
     }
     DataService.prototype.getEmployees = function () {
         return this.http.get(this.url);

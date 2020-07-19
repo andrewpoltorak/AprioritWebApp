@@ -9,8 +9,8 @@ import { Employee } from './Employee';
 })
 
 export class AppComponent implements OnInit {
-  employee: Employee = new Employee();   // изменяемый товар
-  employees: Employee[];                // массив товаров
+  employee: Employee = new Employee();   // изменяемый сотрудник
+  employees: Employee[];                // массив сотрудников
   tableMode: boolean = true;          // табличный режим
 
   constructor(private dataService: DataService) { }
@@ -18,35 +18,33 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.loadEmployees();    // загрузка данных при старте компонента  
   }
+
   // получаем данные через сервис
   loadEmployees() {
     this.dataService.getEmployees()
       .subscribe((data: Employee[]) => this.employees = data);
   }
+
   // сохранение данных
   save() {
     if (this.employee.Id == null) {
       this.dataService.createEmployee(this.employee)
         .subscribe((data: Employee) => this.employees.push(data));
-    } else {
-      this.dataService.updateEmployee(this.employee)
-        .subscribe(data => this.loadEmployees());
     }
     this.cancel();
   }
-  editProduct(p: Employee) {
-    this.employee = p;
-  }
+
   cancel() {
     this.employee = new Employee();
     this.tableMode = true;
   }
-  delete(p: Employee) {
-    this.dataService.deleteEmployee(p.Id)
-      .subscribe(data => this.loadEmployees());
-  }
+
   add() {
     this.cancel();
     this.tableMode = false;
+  }
+
+  addPosition() {
+
   }
 }

@@ -22,7 +22,7 @@ namespace AprioritWebApp
         {
             services.AddDbContext<MainContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MainContext")));
 
-            services.AddControllersWithViews();
+            services.AddControllers();
 
             services.AddSpaStaticFiles(configuration =>
             {

@@ -15,5 +15,6 @@ namespace AprioritWebApp.Data
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Position> Positions { get; set; }
     }
 }

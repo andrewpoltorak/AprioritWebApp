@@ -21,11 +21,4 @@ export class DataService {
   createEmployee(employee: Employee) {
     return this.http.post(this.url, employee);
   }
-  updateEmployee(employee: Employee) {
-
-    return this.http.put(this.url, employee);
-  }
-  deleteEmployee(id: number) {
-    return this.http.delete(this.url + '/' + id);
-  }
 }
