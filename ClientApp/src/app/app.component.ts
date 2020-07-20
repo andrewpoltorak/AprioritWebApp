@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from './data.service';
 import { Employee } from './Employee';
+import { Position } from './Position';
+import { error } from '@angular/compiler/src/util';
+//import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +12,18 @@ import { Employee } from './Employee';
 })
 
 export class AppComponent implements OnInit {
-  employee: Employee = new Employee();   // изменяемый сотрудник
-  employees: Employee[];                // массив сотрудников
-  tableMode: boolean = true;          // табличный режим
+  employee: Employee = new Employee();
+  employees: Employee[];
+  position: Position = new Position();
+  positions: Position[];
+  tableMode: number = 1;
+  errors: string[];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.loadEmployees();    // загрузка данных при старте компонента  
+    this.loadEmployees();    // загрузка данных при старте компонента
+    this.loadPositions();
   }
 
   // получаем данные через сервис
@@ -30,21 +37,42 @@ export class AppComponent implements OnInit {
     if (this.employee.Id == null) {
       this.dataService.createEmployee(this.employee)
         .subscribe((data: Employee) => this.employees.push(data));
+      alert("Новый сотрудник добавлен");
     }
     this.cancel();
   }
 
   cancel() {
     this.employee = new Employee();
-    this.tableMode = true;
+    this.tableMode = 1;
   }
 
   add() {
     this.cancel();
-    this.tableMode = false;
+    this.tableMode = 2;
+  }
+
+  loadPositions() {
+    this.dataService.getPositions()
+      .subscribe((data: Position[]) => this.positions = data);
+  }
+
+  savePosition() {
+    if (this.position.Id == null) {
+      this.dataService.createPosition(this.position)
+        .subscribe((data: Position) => this.positions.push(data));
+      alert("Должность добавлена");
+    }
+    this.cancel();
+  }
+
+  cancelPosition() {
+    this.position = new Position();
+    this.tableMode = 1;
   }
 
   addPosition() {
-
+    this.cancel();
+    this.tableMode = 3;
   }
 }

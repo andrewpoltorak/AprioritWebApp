@@ -54,11 +54,13 @@
     <None Remove="ClientApp\src\app\fetch-data\fetch-data.component.ts" />
     <None Remove="ClientApp\src\app\home\home.component.html" />
     <None Remove="ClientApp\src\app\home\home.component.ts" />
+    <None Remove="ClientApp\src\app\Position.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\data.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Employee.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Position.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
@@ -88,5 +90,7 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+
+  <ProjectExtensions><VisualStudio><UserProperties clientapp_4package_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

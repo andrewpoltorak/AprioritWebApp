@@ -1,35 +1,43 @@
 <div class="body" style="margin-left:20px;">
   <h1>Список сотрудников</h1>
   <input type="button" value="Добавить сотрудника" class="btn btn-sm btn-primary" (click)="add()" />
-  <input type="button" value="Добавить должность" class="btn btn-sm btn-primary" (click)="addPosition()" style="float:right; margin-right:20px;"/>
-  <table *ngIf="tableMode; else create" class="table table-striped" style="margin-top:20px;">
-    <thead>
-      <tr>
-        <td>#</td>
-        <td>Должность</td>
-        <td>Сотрудник</td>
-        <td>Оклад</td>
-        <td>Дата назначения</td>
-        <td>Дата увольнения</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let e of employees">
-        <td>{{e?.id}}</td>
-        <td>{{e?.position}}</td>
-        <td>{{e?.firstName}} {{e?.lastName}}</td>
-        <td>{{e?.salary}}</td>
-        <td>{{e?.hiredDate}}</td>
-        <td>{{e?.firedDate}}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <ng-template #create>
-    <div class="create-employee" style="margin-top:20px;">
+  <input type="button" value="Добавить должность" class="btn btn-sm btn-primary" (click)="addPosition()" style="float:right; margin-right:20px;" />
+  <ng-template [ngIf]="tableMode == 1">
+    <table class="table table-striped" style="margin-top:20px;">
+      <thead>
+        <tr>
+          <td>#</td>
+          <td>Должность</td>
+          <td>Сотрудник</td>
+          <td>Оклад</td>
+          <td>Дата назначения</td>
+          <td>Дата увольнения</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of employees; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{e?.position}}</td>
+          <td>{{e?.firstName}} {{e?.lastName}}</td>
+          <td>{{e?.salary}}</td>
+          <td>{{e?.hiredDate | date:"dd/MM/yyyy"}}</td>
+          <td>{{e?.firedDate | date:"dd/MM/yyyy"}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+  <!-- добавление нового сотрудника -->
+  <ng-template [ngIf]="tableMode == 2">
+    <div class="create-employee" style="margin-top:20px; max-width:1000px;">
       <div class="form-group">
         <label>Должность</label>
-        <input type="text" [(ngModel)]="employee.Position" class="form-control" />
+        <select required name="Position"
+                #refPosition="ngModel"
+                class="form-control" [(ngModel)]="employee.Position">
+          <option *ngFor="let p of positions">
+            {{p.name}}
+          </option>
+        </select>
       </div>
       <div class="form-group">
         <label>Имя</label>
@@ -54,6 +62,19 @@
       <div>
         <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
         <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" style="margin-left:20px;" />
+      </div>
+    </div>
+  </ng-template>
+  <!-- добавление новой должности -->
+  <ng-template [ngIf]="tableMode == 3">
+    <div class="create-position" style="margin-top:20px;max-width:1000px;">
+      <div class="form-group">
+        <label>Должность</label>        
+        <input type="text" [(ngModel)]="position.Name" class="form-control" />
+      </div>
+      <div>
+        <input type="button" value="Сохранить" (click)="savePosition()" class="btn btn-success" />
+        <input type="button" value="Отмена" (click)="cancelPosition()" class="btn btn-warning" style="margin-left:20px;" />
       </div>
     </div>
   </ng-template>
